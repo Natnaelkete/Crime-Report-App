@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import ReportForm from "./ReportForm";
+import { ReportForm } from "./ReportForm";
 import { ReportSubmitted } from "./ReportFormCompleted";
 
-const ReportWizard = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1);
+export function ReportWizard() {
+  const [currentStep, setCurrentStep] = useState(1);
+  console.log("Current Step is:", currentStep);
   const [reportData, setReportData] = useState<any>(null);
 
   const handleStepComplete = async (data: any) => {
     setReportData({ ...reportData, ...data });
 
-    if (currentStep === 3) {
+    if (currentStep === 4) {
       return;
     }
+
     setCurrentStep((prev) => prev + 1);
   };
 
@@ -25,6 +27,4 @@ const ReportWizard = () => {
       )}
     </div>
   );
-};
-
-export default ReportWizard;
+}

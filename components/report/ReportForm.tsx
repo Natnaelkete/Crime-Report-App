@@ -16,10 +16,10 @@ const REPORT_TYPES = [
 type ReportType = "EMERGENCY" | "NON_EMERGENCY";
 
 interface ReportFormProps {
-  onComplete: (data: any) => any;
+  onComplete: (data: any) => void;
 }
 
-const ReportForm = ({ onComplete }: ReportFormProps) => {
+export function ReportForm({ onComplete }: ReportFormProps) {
   const [formData, setFormData] = useState({
     incidentType: "" as ReportType,
     specificType: "",
@@ -27,10 +27,8 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
     description: "",
     title: "",
   });
-
   const [image, setImage] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [coordinates, setCoordinates] = useState<{
     latitude: number | null;
     longitude: number | null;
@@ -38,6 +36,7 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
     latitude: null,
     longitude: null,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,11 +66,10 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
           description: data.description,
           specificType: data.reportType,
         }));
-
         setImage(base64 as string);
       }
     } catch (error) {
-      console.log("Error analyzing image", error);
+      console.error("Error analyzing image:", error);
     } finally {
       setIsAnalyzing(false);
     }
@@ -121,6 +119,7 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
       }
 
       onComplete(result);
+      console.log("This is A REsult", result);
     } catch (error) {
       console.error("Error submitting report:", error);
     } finally {
@@ -129,7 +128,7 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
   };
 
   return (
-    <form className="space-y-8" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-8">
       {/* Emergency Type Selection */}
       <div className="grid grid-cols-2 gap-4">
         <button
@@ -403,6 +402,4 @@ const ReportForm = ({ onComplete }: ReportFormProps) => {
       </button>
     </form>
   );
-};
-
-export default ReportForm;
+}

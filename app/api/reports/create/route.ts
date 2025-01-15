@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       message: "Report submitted successfully",
     });
   } catch (error) {
-    console.error("Error creating report:", error);
+    console.log(error);
     return NextResponse.json(
       {
         success: false,
