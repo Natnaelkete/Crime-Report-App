@@ -28,13 +28,13 @@ export default function RootLayout({
           </div>
 
           {/* NavBar */}
-          <Navbar />
+          <Providers>
+            <Navbar />
 
-          <main className="pt-16">
-            <QueryProviders>
-              <Providers>{children}</Providers>
-            </QueryProviders>
-          </main>
+            <main className="pt-16">
+              <QueryProviders>{children}</QueryProviders>
+            </main>
+          </Providers>
         </div>
       </body>
     </html>
